@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="report_receive_money"
+            model="account.payment"
+            string="Receipt (01-TT)"
+            name="report_payment.account_move_view_report_receive_money"
+            file="co_report_website_account_move"
+            report_type="qweb-pdf"
+        />
+
+        <template id="account_move_view_report_receive_money">
+
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="report_template.co_report_empty_layout">
+                        <div class="page"
+                            style="font-size:1rem; font-family: 'Times New Roman', Times, serif;"
+                        >
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="float-left">
+                                        <h6>
+                                            <strong><span t-esc="doc.company_id.name" /></strong>
+                                        </h6>
+                                        <h6>
+                                            <strong><span>Address: </span></strong>
+                                            <t t-esc="doc.partner_id.street" />
+                                            - <t t-esc="doc.partner_id.city" /> - <t
+                                                t-esc="doc.partner_id.state_id.name" />
+                                        </h6>
+                                        <h6>
+                                            <strong><span>Tax: </span></strong>
+                                            <span t-esc="doc.company_id.vat" />
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="float-right text-center">
+                                        <div>
+                                            <h6><strong>Form No. 01 - TT</strong></h6>
+                                            <p>
+                                                (Issued under Circular 200/2014/TT-BTC dated December 22, 2014 of the Ministry of Finance)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-9" style="padding-left: 250px;">
+                                    <h2> 
+                                        <strong>RECEIPTS</strong>
+                                    </h2>
+                                    <p>
+                                        <span> Day </span>
+                                        <span t-esc="doc.date.day" />
+                                        <span> Month </span>
+                                        <span t-esc="doc.date.month" />
+                                        <span> Year </span>
+                                        <span t-esc="doc.date.year" />
+                                    </p>
+                                </div>
+                                <div class="col-3 text-left">
+                                    <p>
+                                        <span> Number: </span>
+                                        <span t-esc="doc.name" />
+                                    </p>
+
+                                    <p>
+                                        <span>Credit: </span>
+                                        <t t-foreach="doc.move_id.line_ids" t-as="account_debit">
+                                            <t t-if="account_debit.debit != 0">
+                                                <span t-esc="account_debit.account_id.code" />
+                                            </t>
+                                        </t>
+                                    </p>
+                                    <p>
+                                        <span>Debit: </span>
+                                        <t t-foreach="doc.move_id.line_ids" t-as="account_credit">
+                                            <t t-if="account_credit.credit != 0">
+                                                <span t-esc="account_credit.account_id.code" />
+                                            </t>
+                                        </t>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>
+                                        <span>Full name of the applicant: </span>
+                                        <span t-esc="doc.partner_id.name" />
+                                    </p>
+                                    <p>
+                                        <span>Address: </span>
+                                        <t t-esc="doc.partner_id.street" /> - <t
+                                            t-esc="doc.partner_id.city" /> - <t
+                                            t-esc="doc.partner_id.state_id.name" />
+                                    </p>
+                                    <p>
+                                        <span>Reason: </span>
+                                        <span t-esc="doc.ref" />
+                                    </p>
+                                    <p>
+                                        <span class="col-3 float-left p-0"> Total: <t
+                                                t-esc="doc.amount" />
+                                        </span>
+                                        <span class="col-9 float-right p-0"> (Write in words): <t
+                                                t-esc="doc.company_id.currency_id.amount_to_text_vn(doc.amount)" />
+                                        </span>
+                                    </p>
+                                    <p class="mt-5">
+                                        <span>attached: </span>
+                                        <!-- <span t-esc="doc.partner_id.name" /> -->
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row float-right">
+                                <div class="col-12 mr-2">
+                                    <p>
+                                        <span> Day </span>
+                                        <span t-esc="doc.date.day" />
+                                        <span> Month </span>
+                                        <span t-esc="doc.date.month" />
+                                        <span> Year </span>
+                                        <span t-esc="doc.date.year" />
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row mt-5 text-center">
+                                <div class="col-3">
+                                    <p>
+                                        <strong>Managing Director</strong>
+                                    </p>
+                                    <p class="mb-5"><i>(Signature)</i></p>
+                                </div>
+                                <div class="col-2">
+                                    <p>
+                                        <strong>Chief Accountant</strong>
+                                    </p>
+                                    <p class="mb-5"><i>(Signature)</i></p>
+                                </div>
+                                <div class="col-2">
+                                    <p>
+                                        <strong>Payer</strong>
+                                    </p>
+                                    <p class="mb-5"><i>(Signature)</i></p>
+                                </div>
+                                <div class="col-2">
+                                    <p>
+                                        <strong>Voter</strong>
+                                    </p>
+                                    <p class="mb-5"><i>(Signature)</i></p>
+                                </div>
+                                <div class="col-3">
+                                    <p>
+                                        <strong>Treasurer</strong>
+                                    </p>
+                                    <p class="mb-5"><i>(Signature)</i></p>
+                                </div>
+                            </div>
+                            <div style="margin-top:150px;">
+                                <p>
+                                    <span>Received full amount (in words): </span>
+                                    <span
+                                        t-esc="doc.company_id.currency_id.amount_to_text_vn(doc.amount_total)" />
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

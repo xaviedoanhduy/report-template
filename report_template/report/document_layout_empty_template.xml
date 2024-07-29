@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="co_report_empty_layout" name="Cuttom Report Layout">&lt;!DOCTYPE html&gt;
+            <t t-call="web.html_container" style="font-size:1rem; font-family: 'Times New Roman', Times, serif;">
+                <t t-if="not o" t-set="o" t-value="doc"/>
+                <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                        t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-raw="0"/>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
